@@ -1,6 +1,3 @@
-## Status
-Alpha
-
 ## Usage
 ```
 const { JoiValidator } = require('generic-joi-validator');
@@ -24,13 +21,36 @@ joiValidator.schemata.stores = {
     }
 };
 
-// With koa (pseudocode)
-async (ctx, next) => {
-const resourceName = // get it from ctx.url;
-const sourceObject = // ctx.request.body or wherever, you may use multiple;
-const { error, value } = joiValidator.prepare(resourceName, sourceObject);
-...
-}
+// With koa
+const Koa = require('koa');
+const bodyParser = require('koa-bodyparser');
+const Router = require('koa-router');
+
+const router = new Router();
+const app = new Koa();
+
+app.use(bodyParser());
+
+const koaValidator = async (ctx, next) => {
+    const { error, value } = joiValidator.prepare(ctx.url.substr(ctx.url.lastIndexOf('/') + 1), ctx.request.body);
+    ctx.assert(!error, 400, value);
+    ctx.state.data = value;
+    return next();
+};
+
+router.post(
+    '/stores',
+    koaValidator,
+    async (ctx, next) => {
+        ctx.body = ctx.state.data;
+        return next();
+    }
+);
+
+app.use(router.allowedMethods({ throw: true }));
+app.use(router.routes());
+
+app.listen(3000);
 ```
 
 ## Install
