@@ -1,0 +1,35 @@
+{
+  "name": "generic-joi-validator",
+  "version": "0.1.0",
+  "description": "Uses Joi schema to validate objects, can be used with express and koa routes, may be used with other frameworks",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "generateDoc": "jsdoc2md -t jsdoc2md/readme.hbs lib.js > readme.md"
+  },
+  "author": "Abdulrahman Amri",
+  "license": "ISC",
+  "dependencies": {
+    "joi": "^13.0.2",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "jest": "^21.2.1",
+    "jsdoc-to-markdown": "^3.0.2",
+    "pre-git": "^3.16.0"
+  },
+  "keywords": [
+    "validation",
+    "joi",
+    "express",
+    "koa",
+    "error"
+  ],
+  "config": {
+    "pre-git": {
+      "pre-commit": [
+        "npm run generateDoc"
+      ]
+    }
+  }
+}
