@@ -4,13 +4,26 @@ const { JoiValidator } = require('generic-joi-validator');
 const joiValidator = new JoiValidator();
 
 // Use a translator to extract Joi schema from your database
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+const getJoiSchema = require('mongoose-to-joi-translator');
 joiValidator.schemata.stores = getJoiSchema(new Schema({
-    name: Joi.string().required(),
-    location: {
-        latitude: Joi.string().required(),
-        longitude: Joi.string().required()
-    }
+    name: {
+        type: String,
+        required: true
+    },
+    location: new Schema({
+        latitude: {
+            type: String,
+            required: true
+        },
+        longitude: {
+            type: String,
+            required: true
+        }
+    })
 }));
+
 
 // or add your schema manually
 joiValidator.schemata.stores = {
