@@ -8,20 +8,20 @@ const joiValidator = new JoiValidator();
 
 // Use a translator to extract Joi schema from your database
 joiValidator.schemata.stores = getJoiSchema(new Schema({
-name: Joi.string().required(),
-location: {
-latitude: Joi.string().required(),
-longitude: Joi.string().required()
-}
+    name: Joi.string().required(),
+    location: {
+        latitude: Joi.string().required(),
+        longitude: Joi.string().required()
+    }
 }));
 
 // or add your schema manually
 joiValidator.schemata.stores = {
-name: Joi.string().required(),
-location: {
-latitude: Joi.string().required(),
-longitude: Joi.string().required()
-}
+    name: Joi.string().required(),
+    location: {
+        latitude: Joi.string().required(),
+        longitude: Joi.string().required()
+    }
 };
 
 // With koa (pseudocode)
