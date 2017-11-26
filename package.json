@@ -29,7 +29,11 @@
     "pre-git": {
       "pre-commit": [
         "npm run generateDoc"
-      ]
+      ],
+      "pre-push": [],
+      "post-commit": [],
+      "post-checkout": [],
+      "post-merge": []
     }
   }
 }
