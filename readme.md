@@ -1,13 +1,12 @@
 ## Usage
 ```
-const { JoiValidator } = require('generic-joi-validator');
-const joiValidator = new JoiValidator();
+const { schemata, prepare } = require('generic-joi-validator');
 
 // Use a translator to extract Joi schema from your database
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const getJoiSchema = require('mongoose-to-joi-translator');
-joiValidator.schemata.stores = getJoiSchema(new Schema({
+schemata.stores = getJoiSchema(new Schema({
     name: {
         type: String,
         required: true
@@ -26,7 +25,7 @@ joiValidator.schemata.stores = getJoiSchema(new Schema({
 
 
 // or add your schema manually
-joiValidator.schemata.stores = {
+schemata.stores = {
     name: Joi.string().required(),
     location: {
         latitude: Joi.string().required(),
@@ -44,16 +43,32 @@ const app = new Koa();
 
 app.use(bodyParser());
 
-const koaValidator = async (ctx, next) => {
-    const { error, value } = joiValidator.prepare(ctx.url.substr(ctx.url.lastIndexOf('/') + 1), ctx.request.body);
-    ctx.assert(!error, 400, value);
-    ctx.state.data = value;
+/**
+* Koa-specific Wrapper for the prepare function, looks for data in the body, params, and query
+* of ctx.request and assign the validated data to ctx.state.data
+* @param {String} [params] list of strings in space-separated value format
+* @param {Boolean} [areOptional] specifies whether the attributes are optional
+* (overrides required check)
+*/
+const koaValidator = (params, areOptional) => (ctx, next) => {
+    // takes foo from '/foo/something/another'
+    const resourceName = ctx.url.replace(/^\/([^/]*).*$/, '$1');
+    // source the object the validator will look through
+    const source = {
+        ...ctx.request.body,
+        ...ctx.params,
+        ...ctx.request.query
+    };
+    const {error, value} = prepare(resourceName, source, params, areOptional);
+    ctx.assert(!error, 400, {message: error ? error.message : error});
+    ctx.state.data = {...ctx.state.data, ...value};
     return next();
 };
 
+
 router.post(
     '/stores',
-    koaValidator,
+    koaValidator(),
     async (ctx, next) => {
         ctx.body = ctx.state.data;
         return next();
@@ -88,7 +103,7 @@ the property isJoi in each schema is reserved.</p>
 ## Functions
 
 <dl>
-<dt><a href="#prepare">prepare(resourceName, sourceObject, [attributes])</a> ⇒ <code>Object</code></dt>
+<dt><a href="#prepare">prepare(resourceName, sourceObject, [attributes], [areOptional])</a> ⇒ <code>Object</code></dt>
 <dd><p>validates the object based on the schema of the resource</p>
 </dd>
 </dl>
@@ -102,7 +117,7 @@ the property isJoi in each schema is reserved.
 **Kind**: global variable  
 <a name="prepare"></a>
 
-## prepare(resourceName, sourceObject, [attributes]) ⇒ <code>Object</code>
+## prepare(resourceName, sourceObject, [attributes], [areOptional]) ⇒ <code>Object</code>
 validates the object based on the schema of the resource
 
 **Kind**: global function  
@@ -113,4 +128,5 @@ validates the object based on the schema of the resource
 | resourceName | <code>String</code> | resource name |
 | sourceObject | <code>Object</code> | location of attributes to validate |
 | [attributes] | <code>String</code> | list of attributes to be checked in space-separated value format, defaults to all. |
+| [areOptional] | <code>Boolean</code> | specifies whether the attributes specified are optional |
 
