@@ -1,6 +1,6 @@
 {
   "name": "generic-joi-validator",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Uses Joi schema to validate objects, can be used with express and koa routes, may be used with other frameworks",
   "main": "index.js",
   "scripts": {
