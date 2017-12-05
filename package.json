@@ -2,7 +2,7 @@
   "name": "generic-joi-validator",
   "version": "1.0.0",
   "repository": "git@github.com:wearereasonablepeople/generic-joi-validator.git",
-  "description": "Uses Joi schema to validate objects, can be used with express and koa routes, may be used with other frameworks",
+  "description": "Uses Joi schema to validate objects, can be used with express and koa routes, may be used with other frameworks.",
   "main": "index.js",
   "scripts": {
     "test:coverage": "jest --coverage",
