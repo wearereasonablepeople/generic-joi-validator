@@ -32,7 +32,7 @@ describe('lib', () => {
     });
     it('should throw an error if schema was not found', () => {
       expect(() => prepare('someSchema', goodObject, 'location.latitude'))
-        .toThrow();
+      .toThrow();
     });
     it('should not throw error on optional fields that are originally required', () => {
       delete goodObject.location.longitude;

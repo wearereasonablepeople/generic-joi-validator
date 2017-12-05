@@ -5,8 +5,10 @@
   "description": "Uses Joi schema to validate objects, can be used with express and koa routes, may be used with other frameworks",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "generateDoc": "jsdoc2md -t jsdoc2md/readme.hbs lib.js > readme.md"
+    "test:coverage": "jest --coverage",
+    "test:lint": "eslint lib.js",
+    "generateDoc": "jsdoc2md -t jsdoc2md/readme.hbs lib.js > readme.md",
+    "ci": "npm run test:lint && npm run test:coverage"
   },
   "author": "Abdulrahman Amri",
   "license": "MIT",
@@ -17,7 +19,10 @@
   "devDependencies": {
     "jest": "^21.2.1",
     "jsdoc-to-markdown": "^3.0.2",
-    "pre-git": "^3.16.0"
+    "pre-git": "^3.16.0",
+    "eslint-config-warp": "^2.1.0",
+    "eslint": "^4.11.0",
+    "codecov": "^3.0.0"
   },
   "keywords": [
     "validation",
@@ -29,9 +34,6 @@
   "config": {
     "enabled": true,
     "pre-git": {
-      "pre-add": [
-        "npm run generateDoc"
-      ],
       "pre-commit": [
         "npm run generateDoc"
       ],

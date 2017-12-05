@@ -12,17 +12,17 @@ const isObject = val =>
 
 const paths = (obj = {}) =>
   Object.entries(obj)
-    .reduce(
-      (product, [key, value]) =>
-        (isObject(value) && !value.isJoi) ?
-          product.concat([
-            // adds [root, [children]] list
-            [key, paths(value)]
-          ]) :
-          // adds [child] list
-          product.concat([key]),
-      []
-    );
+  .reduce(
+    (product, [key, value]) =>
+      (isObject(value) && !value.isJoi) ?
+        product.concat([
+          // adds [root, [children]] list
+          [key, paths(value)]
+        ]) :
+        // adds [child] list
+        product.concat([key]),
+    []
+  );
 
 const addDelimiter = (a, b) =>
   a ? `${a}.${b}` : b;
@@ -34,7 +34,7 @@ const pathToString = ([root, children]) =>
         addDelimiter(root, pathToString(child)) :
         addDelimiter(root, child)
   )
-    .join(' ');
+  .join(' ');
 // ----------------------
 
 /**
