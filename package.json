@@ -1,6 +1,7 @@
 {
   "name": "generic-joi-validator",
   "version": "1.0.0",
+  "repository": "git@github.com:wearereasonablepeople/generic-joi-validator.git",
   "description": "Uses Joi schema to validate objects, can be used with express and koa routes, may be used with other frameworks",
   "main": "index.js",
   "scripts": {
@@ -8,7 +9,7 @@
     "generateDoc": "jsdoc2md -t jsdoc2md/readme.hbs lib.js > readme.md"
   },
   "author": "Abdulrahman Amri",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "joi": "^13.0.2",
     "lodash": "^4.17.4"
@@ -26,7 +27,11 @@
     "error"
   ],
   "config": {
+    "enabled": true,
     "pre-git": {
+      "pre-add": [
+        "npm run generateDoc"
+      ],
       "pre-commit": [
         "npm run generateDoc"
       ],
