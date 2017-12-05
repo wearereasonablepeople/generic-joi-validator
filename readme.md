@@ -2,6 +2,9 @@
 [![Build Status](https://travis-ci.org/wearereasonablepeople/generic-joi-validator.svg?branch=master)](https://travis-ci.org/wearereasonablepeople/generic-joi-validator)
 [![codecov](https://codecov.io/gh/wearereasonablepeople/generic-joi-validator/branch/master/graph/badge.svg)](https://codecov.io/gh/wearereasonablepeople/generic-joi-validator)
 
+## Current translators
+[mongoose-to-joi-translator](https://github.com/wearereasonablepeople/mongoose-to-joi-translator)
+
 ## Usage
 ```
 const { schemata, prepare } = require('generic-joi-validator');
