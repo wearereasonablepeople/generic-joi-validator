@@ -2,16 +2,30 @@
 [![Build Status](https://travis-ci.org/wearereasonablepeople/generic-joi-validator.svg?branch=master)](https://travis-ci.org/wearereasonablepeople/generic-joi-validator)
 [![codecov](https://codecov.io/gh/wearereasonablepeople/generic-joi-validator/branch/master/graph/badge.svg)](https://codecov.io/gh/wearereasonablepeople/generic-joi-validator)
 
+## Installation
+```
+npm install generic-joi-validator
+```
+
+## Description
+This package facilitates managing multiple Joi structures and running validation on them.
+
 ## Current translators
 [mongoose-to-joi-translator](https://github.com/wearereasonablepeople/mongoose-to-joi-translator)
 
+More are coming soon. Got a new translator? Create an issue and I'll include it.
+
 ## Usage
+
+Requiring methods from the package.
 ```
 const { schemata, prepare } = require('generic-joi-validator');
+```
 
-// Use a translator to extract Joi schema from your database
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+Add domain models to your schemata object.
+You may use your mongoose database models directly with [mongoose-to-joi-translator](https://github.com/wearereasonablepeople/mongoose-to-joi-translator).
+
+```
 const getJoiSchema = require('mongoose-to-joi-translator');
 schemata.stores = getJoiSchema(new Schema({
     name: {
@@ -29,9 +43,10 @@ schemata.stores = getJoiSchema(new Schema({
         }
     })
 }));
+```
 
-
-// or add your schema manually
+Add your schema manually
+```
 schemata.stores = {
     name: Joi.string().required(),
     location: {
@@ -39,23 +54,32 @@ schemata.stores = {
         longitude: Joi.string().required()
     }
 };
+```
 
-// With koa
-const Koa = require('koa');
-const bodyParser = require('koa-bodyparser');
-const Router = require('koa-router');
+Other domain models may also be included
+Examples:
+* schemata.storesQuery to contain what is queryable in stores and validates user input based on it.
+* schemata.pagination to contain the pagination structure.
+```
+schemata.pagination = {
+    skip: Joi.number().optional().default(defaultSkip),
+    limit: Joi.number().optional().default(defaultLimit)
+};
+```
 
-const router = new Router();
-const app = new Koa();
+An example of how to use this package with Koa
 
-app.use(bodyParser());
+Create middleware
+```
+// You may also create middlewares for getQuery input, getPagination input, etc.
 
 /**
 * Koa-specific Wrapper for the prepare function, looks for data in the body, params, and query
 * of ctx.request and assign the validated data to ctx.state.data
-* @param {String} [params] list of strings in space-separated value format
+* @param {String} [params] list of strings in space-separated value format, example 'word location.latitude location.longitude'.
+* By default it will check all properties found in the specified joi structure.
 * @param {Boolean} [areOptional] specifies whether the attributes are optional
-* (overrides required check)
+* (overrides required check) useful for partial update validation
 */
 const koaValidator = (params, areOptional) => (ctx, next) => {
     // takes foo from '/foo/something/another'
@@ -71,8 +95,9 @@ const koaValidator = (params, areOptional) => (ctx, next) => {
     ctx.state.data = {...ctx.state.data, ...value};
     return next();
 };
-
-
+```
+Use in your routes
+```
 router.post(
     '/stores',
     koaValidator(),
@@ -81,22 +106,14 @@ router.post(
         return next();
     }
 );
-
-app.use(router.allowedMethods({ throw: true }));
-app.use(router.routes());
-
-app.listen(3000);
-```
-
-## Install
-```
-npm install generic-joi-validator
 ```
 
 ## Test
 ```
 npm test
 ```
+
+## Documentation
 
 ## Members
 
