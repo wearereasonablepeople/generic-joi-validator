@@ -1,4 +1,4 @@
-![Generic-joi-validator Logo](https://raw.github.com/wearereasonablepeople/generic-joi-validator/master/images/gjv.png
+![Generic-joi-validator Logo](https://raw.github.com/wearereasonablepeople/generic-joi-validator/master/images/gjv.png)
 
 # Generic Joi Validator
 [![Build Status](https://travis-ci.org/wearereasonablepeople/generic-joi-validator.svg?branch=master)](https://travis-ci.org/wearereasonablepeople/generic-joi-validator)
