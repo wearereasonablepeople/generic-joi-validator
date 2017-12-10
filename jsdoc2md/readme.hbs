@@ -3,6 +3,8 @@
 # Generic Joi Validator
 [![Build Status](https://travis-ci.org/wearereasonablepeople/generic-joi-validator.svg?branch=master)](https://travis-ci.org/wearereasonablepeople/generic-joi-validator)
 [![codecov](https://codecov.io/gh/wearereasonablepeople/generic-joi-validator/branch/master/graph/badge.svg)](https://codecov.io/gh/wearereasonablepeople/generic-joi-validator)
+[![dependencies Status](https://david-dm.org/wearereasonablepeople/generic-joi-validator/status.svg)](https://david-dm.org/wearereasonablepeople/generic-joi-validator)
+[![devDependencies Status](https://david-dm.org/wearereasonablepeople/generic-joi-validator/dev-status.svg)](https://david-dm.org/wearereasonablepeople/generic-joi-validator?type=dev)
 
 ## Installation
 ```
