@@ -18,12 +18,12 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "codecov": "^3.0.0",
+    "eslint": "^4.13.1",
+    "eslint-config-warp": "^2.1.0",
     "jest": "^21.2.1",
     "jsdoc-to-markdown": "^3.0.2",
-    "pre-git": "^3.16.0",
-    "eslint-config-warp": "^2.1.0",
-    "eslint": "^4.11.0",
-    "codecov": "^3.0.0"
+    "pre-git": "^3.16.0"
   },
   "keywords": [
     "validation",
